@@ -1,0 +1,16 @@
+version: '3'
+services:
+  nginx:
+    environment:
+      TZ: Asia/Tokyo  
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+      - "443:443"
+  tomcat:
+    build: ./tomcat
+    ports:
+      - "8080:8080"
+      - "8443:8443"
