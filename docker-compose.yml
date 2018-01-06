@@ -14,3 +14,16 @@ services:
     ports:
       - "8080:8080"
       - "8443:8443"
+  data:
+    build: ./data
+    volumes:
+      - ./workspace:/workspace
+  cloud9:
+    build: ./cloud9
+    volumes:
+      - data:/workspace
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "18080:80"
+      - "15454:15454"
