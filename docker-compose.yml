@@ -4,13 +4,41 @@ services:
     environment:
       TZ: Asia/Tokyo  
     build: ./nginx
+    hostname: nginx01
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
       - "443:443"
-  tomcat:
+    links:
+      - tomcat01
+  tomcat01:
     build: ./tomcat
+    hostname: tomcat01
     ports:
       - "8080:8080"
       - "8443:8443"
+    links:
+      - redis
+      - postgres
+  data:
+    build: ./data
+    volumes:
+      - ./workspace:/workspace
+  cloud9:
+    build: ./cloud9
+    volumes:
+      - data:/workspace
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "18080:80"
+      - "15454:15454"
+  postgres:
+    build: ./postgres
+    ports:
+      - "5432:5432"
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
