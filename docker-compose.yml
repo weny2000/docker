@@ -4,13 +4,17 @@ services:
     environment:
       TZ: Asia/Tokyo  
     build: ./nginx
+    hostname: nginx01
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
       - "443:443"
-  tomcat:
+    links:
+      - tomcat01
+  tomcat01:
     build: ./tomcat
+    hostname: tomcat01
     ports:
       - "8080:8080"
       - "8443:8443"
