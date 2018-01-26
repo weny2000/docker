@@ -138,6 +138,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+COPY contents /usr/share/nginx/html/contents
+COPY icehrm /usr/share/nginx/html/icehrm
+RUN chmod 755 /usr/share/nginx/html/contents /usr/share/nginx/html/icehrm
 
 EXPOSE 80
 
