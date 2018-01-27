@@ -1,21 +1,22 @@
 version: '3'
 services:
-  app:
-    image: php:7.1.9-fpm-alpine
+  php:
+    build: ./php
     volumes:
-      - ./data/html:/var/www/html
+      - ./data/html:/usr/share/nginx/html
   nginx:
     environment:
       TZ: Asia/Tokyo  
     build: ./nginx
-    depends_on:
-      - app
     hostname: nginx01
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/html:/usr/share/nginx/html
     ports:
       - "80:80"
       - "443:443"
+    depends_on:
+      - php
     links:
       - tomcat01
   tomcat01:
@@ -30,11 +31,11 @@ services:
   data:
     build: ./data
     volumes:
-      - ./workspace:/workspace
+      - ./data/workspace:/workspace
   cloud9:
     build: ./cloud9
     volumes:
-      - data:/workspace
+      - ./data/workspace:/workspace
     volumes:
       - /etc/localtime:/etc/localtime:ro
     ports:
