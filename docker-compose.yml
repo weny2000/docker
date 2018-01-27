@@ -19,6 +19,7 @@ services:
       - php
     links:
       - tomcat01
+      - hrmsDB 
   tomcat01:
     build: ./tomcat
     hostname: tomcat01
@@ -64,6 +65,8 @@ services:
     volumes:
       - ./data/wordpress_data:/var/lib/mysql
     restart: always
+    ports:
+      - "13307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
       MYSQL_DATABASE: wordpress
@@ -77,6 +80,6 @@ services:
       - "8000:80"
     restart: always
     environment:
-      WORDPRESS_DB_HOST: wordpressDB01:3306
+      WORDPRESS_DB_HOST: wordpressDB:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
