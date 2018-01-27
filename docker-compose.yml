@@ -27,29 +27,28 @@ services:
       - "8080:8080"
       - "8443:8443"
     links:
-      - redis
-      - postgres
+      - hrmsDB
   data:
     build: ./data
     volumes:
       - ./data/workspace:/workspace
-  cloud9:
-    build: ./cloud9
-    volumes:
-      - ./data/workspace:/workspace
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - "18080:80"
-      - "15454:15454"
-  postgres:
-    build: ./postgres
-    ports:
-      - "5432:5432"
-  redis:
-    build: ./redis
-    ports:
-      - "6379:6379"
+#  cloud9:
+#    build: ./cloud9
+#    volumes:
+#      - ./data/workspace:/workspace
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    ports:
+#      - "18080:80"
+#      - "15454:15454"
+#  postgres:
+#    build: ./postgres
+#    ports:
+#      - "5432:5432"
+#  redis:
+#    build: ./redis
+#    ports:
+#      - "6379:6379"
   hrmsDB:
     image: mysql:5.7
     volumes:
@@ -60,26 +59,26 @@ services:
       MYSQL_DATABASE: hrms
       MYSQL_USER: hrms
       MYSQL_PASSWORD: hrms
-  wordpressDB:
-    image: mysql:5.7
-    volumes:
-      - ./data/wordpress_data:/var/lib/mysql
-    restart: always
-    ports:
-      - "13307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-  wordpress:
-    links:
-      - wordpressDB
-    image: wordpress:latest
-    ports:
-      - "8000:80"
-    restart: always
-    environment:
-      WORDPRESS_DB_HOST: wordpressDB:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+#  wordpressDB:
+#    image: mysql:5.7
+#    volumes:
+#      - ./data/wordpress_data:/var/lib/mysql
+#    restart: always
+#    ports:
+#      - "13307:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: somewordpress
+#      MYSQL_DATABASE: wordpress
+#      MYSQL_USER: wordpress
+#      MYSQL_PASSWORD: wordpress
+#  wordpress:
+#    links:
+#      - wordpressDB
+#    image: wordpress:latest
+#    ports:
+#      - "8000:80"
+#    restart: always
+#    environment:
+#      WORDPRESS_DB_HOST: wordpressDB:3306
+#      WORDPRESS_DB_USER: wordpress
+#      WORDPRESS_DB_PASSWORD: wordpress
