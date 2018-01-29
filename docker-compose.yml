@@ -1,9 +1,11 @@
 version: '3'
 services:
   php:
-    build: ./php
+    build: .
     volumes:
       - ./data/html:/usr/share/nginx/html
+    links:
+      - hrmsDB
   nginx:
     environment:
       TZ: Asia/Tokyo  
@@ -53,6 +55,8 @@ services:
     image: mysql:5.7
     volumes:
       - ./data/hrms_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hrms
