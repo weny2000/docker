@@ -1,7 +1,20 @@
 version: '3'
 services:
+  hrmsDB:
+    image: mysql:5.7
+    container_name: hrms
+    volumes:
+      - ./data/hrms_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hrms
+      MYSQL_DATABASE: hrms
+      MYSQL_USER: hrms
+      MYSQL_PASSWORD: hrms
   php:
-    build: .
+    build: ./php
     volumes:
       - ./data/html:/usr/share/nginx/html
     links:
@@ -17,9 +30,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - php
     links:
+      - php
       - tomcat01
       - hrmsDB 
   tomcat01:
@@ -51,18 +63,6 @@ services:
 #    build: ./redis
 #    ports:
 #      - "6379:6379"
-  hrmsDB:
-    image: mysql:5.7
-    volumes:
-      - ./data/hrms_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: hrms
-      MYSQL_DATABASE: hrms
-      MYSQL_USER: hrms
-      MYSQL_PASSWORD: hrms
 #  wordpressDB:
 #    image: mysql:5.7
 #    volumes:

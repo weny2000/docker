@@ -8,8 +8,8 @@ define('TWITTER_URL', 'Ice Hrm');
 define('CLIENT_NAME', 'app');
 define('APP_BASE_PATH', '/usr/share/nginx/html/icehrm/');
 define('CLIENT_BASE_PATH', '/usr/share/nginx/html/icehrm/app/');
-define('BASE_URL','http://localhost/icehrm/');
-define('CLIENT_BASE_URL','http://localhost/icehrm/app/');
+define('BASE_URL','http://192.168.11.3/icehrm/');
+define('CLIENT_BASE_URL','http://192.168.11.3/icehrm/app/');
 
 define('APP_DB', 'hrms');
 define('APP_USERNAME', 'hrms');

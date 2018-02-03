@@ -23,7 +23,7 @@ if($action == "TEST_DB"){
 
 	$db = NewADOConnection('mysqli');
 	$res = $db->Connect($_REQUEST["APP_HOST"], $_REQUEST["APP_USERNAME"], $_REQUEST["APP_PASSWORD"], $_REQUEST["APP_DB"]);
-
+error_log("#Test DB 01");
 	if (!$res){
 		error_log('Could not connect: ' . $db->ErrorMsg());
 		$ret["status"] = "ERROR";
@@ -31,7 +31,7 @@ if($action == "TEST_DB"){
 		echo json_encode($ret);
 		exit();
 	}
-
+error_log("#Test DB 02");
 	$result = $db->Execute("Show tables");
 	error_log(print_r("Number of tables:".$result->RecordCount(),true));
 	$num_rows = $result->RecordCount();
@@ -41,13 +41,13 @@ if($action == "TEST_DB"){
 		echo json_encode($ret);
 		exit();
 	}
-
+error_log("#Test DB 03");
 	$ret["status"] = "SUCCESS";
 	$ret["msg"] = "Successfully connected to the database";
 	echo json_encode($ret);
 
 }else if($action == "INS"){
-
+error_log("#Test DB 04");
 	$config = file_get_contents(CLIENT_APP_PATH."config.sample.php");
 
 	if(empty($config)){
@@ -57,7 +57,7 @@ if($action == "TEST_DB"){
 		echo json_encode($ret);
 		exit();
 	}
-
+error_log("#Test DB 05");
 	$config = str_replace("_LOG_", $_REQUEST['LOG'], $config);
 	$config = str_replace("_APP_BASE_PATH_", APP_PATH, $config);
 	$config = str_replace("_CLIENT_BASE_PATH_", CLIENT_APP_PATH, $config);
@@ -69,11 +69,11 @@ if($action == "TEST_DB"){
 	$config = str_replace("_APP_HOST_", $_REQUEST['APP_HOST'], $config);
 	$config = str_replace("_CLIENT_", 'app', $config);
 
-
+error_log("#Test DB 06");
 	$db = NewADOConnection('mysqli');
 	$res = $db->Connect($_REQUEST["APP_HOST"], $_REQUEST["APP_USERNAME"], $_REQUEST["APP_PASSWORD"], $_REQUEST["APP_DB"]);
 
-
+error_log("#Test DB 07");
 	if (!$res){
 		error_log('Could not connect: ' . $db->ErrorMsg());
 		$ret["status"] = "ERROR";
