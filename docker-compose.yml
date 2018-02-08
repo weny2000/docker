@@ -14,14 +14,30 @@ services:
       MYSQL_USER: hrms
       MYSQL_PASSWORD: hrms
   php:
-    build: ./php
+    #build: ./php
+    image: php:fpm
     volumes:
       - ./data/html:/usr/share/nginx/html
     links:
       - hrmsDB
+  tomcat01:
+    #build: ./tomcat
+    image: tomcat:8
+    hostname: tomcat01
+    volumes:
+      - ./data/webapps:/usr/local/tomcat/webapps
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    links:
+      - hrmsDB
+  data:
+    build: ./data
+    volumes:
+      - ./data/workspace:/workspace
   nginx:
     environment:
-      TZ: Asia/Tokyo  
+      TZ: Asia/Tokyo
     build: ./nginx
     hostname: nginx01
     volumes:
@@ -33,19 +49,8 @@ services:
     links:
       - php
       - tomcat01
-      - hrmsDB 
-  tomcat01:
-    build: ./tomcat
-    hostname: tomcat01
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-    links:
       - hrmsDB
-  data:
-    build: ./data
-    volumes:
-      - ./data/workspace:/workspace
+
 #  cloud9:
 #    build: ./cloud9
 #    volumes:
