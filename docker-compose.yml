@@ -1,8 +1,13 @@
-version: '3'
+version: '3.4'
 services:
-  hrmsDB:
-    image: mysql:5.7
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
+  hrmsdb:
+    build: ./hrms
     container_name: hrms
+    privileged: true
     volumes:
       - ./data/hrms_data:/var/lib/mysql
     ports:
@@ -14,43 +19,42 @@ services:
       MYSQL_USER: hrms
       MYSQL_PASSWORD: hrms
   php:
-    #build: ./php
     image: php:fpm
+    privileged: true
     volumes:
       - ./data/html:/usr/share/nginx/html
     links:
-      - hrmsDB
-  tomcat01:
-    #build: ./tomcat
+      - hrmsdb
+  tomcat:
     image: tomcat:8
-    hostname: tomcat01
+    container_name: tomcat
+    privileged: true
     volumes:
       - ./data/webapps:/usr/local/tomcat/webapps
     ports:
       - "8080:8080"
       - "8443:8443"
     links:
-      - hrmsDB
-  data:
-    build: ./data
-    volumes:
-      - ./data/workspace:/workspace
+      - hrmsdb
   nginx:
     environment:
       TZ: Asia/Tokyo
     build: ./nginx
-    hostname: nginx01
+    container_name: nginx
+    privileged: true
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./data/html:/usr/share/nginx/html
     ports:
       - "80:80"
       - "443:443"
     links:
       - php
-      - tomcat01
-      - hrmsDB
-
+      - tomcat
+      - hrmsdb
+#  data:
+#    build: ./data
+#    volumes:
+#      - ./data
 #  cloud9:
 #    build: ./cloud9
 #    volumes:
@@ -64,10 +68,6 @@ services:
 #    build: ./postgres
 #    ports:
 #      - "5432:5432"
-#  redis:
-#    build: ./redis
-#    ports:
-#      - "6379:6379"
 #  wordpressDB:
 #    image: mysql:5.7
 #    volumes:
