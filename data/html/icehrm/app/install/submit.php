@@ -25,6 +25,7 @@ if($action == "TEST_DB"){
 	$res = $db->Connect($_REQUEST["APP_HOST"], $_REQUEST["APP_USERNAME"], $_REQUEST["APP_PASSWORD"], $_REQUEST["APP_DB"]);
 error_log("#Test DB 01");
 	if (!$res){
+error_log("#Test DB 01 01");
 		error_log('Could not connect: ' . $db->ErrorMsg());
 		$ret["status"] = "ERROR";
 		$ret["msg"] = "Incorrect credentials or incorrect DB host :".$db->ErrorMsg();

@@ -9,7 +9,7 @@ services:
     container_name: hrms
     privileged: true
     volumes:
-      - ./data/hrms_data:/var/lib/mysql
+      - ./data/hrms_data:/var/lib/mysql:delegated
     ports:
       - "3306:3306"
     restart: always
@@ -22,7 +22,7 @@ services:
     image: php:fpm
     privileged: true
     volumes:
-      - ./data/html:/usr/share/nginx/html
+      - ./data/html:/usr/share/nginx/html:delegated
     links:
       - hrmsdb
   tomcat:
@@ -30,7 +30,7 @@ services:
     container_name: tomcat
     privileged: true
     volumes:
-      - ./data/webapps:/usr/local/tomcat/webapps
+      - ./data/webapps:/usr/local/tomcat/webapps:delegated
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -44,6 +44,7 @@ services:
     privileged: true
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/html:/usr/share/nginx/html:delegated
     ports:
       - "80:80"
       - "443:443"
