@@ -6,10 +6,10 @@ define('FB_URL', 'Ice Hrm');
 define('TWITTER_URL', 'Ice Hrm');
 
 define('CLIENT_NAME', 'app');
-define('APP_BASE_PATH', 'D:\dev\pleiades\xampp\htdocs\icehrm/');
-define('CLIENT_BASE_PATH', 'D:\dev\pleiades\xampp\htdocs\icehrm\app/');
-define('BASE_URL','http://localhost/icehrm/');
-define('CLIENT_BASE_URL','http://localhost/icehrm/app/');
+define('APP_BASE_PATH', '/usr/share/nginx/html/icehrm/');
+define('CLIENT_BASE_PATH', '/usr/share/nginx/htmlicehrm/app/');
+define('BASE_URL','http://nginx/icehrm/');
+define('CLIENT_BASE_URL','http://nginx/icehrm/app/');
 
 define('APP_DB', 'hrms');
 define('APP_USERNAME', 'hrms');

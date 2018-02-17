@@ -6,7 +6,7 @@ services:
       - "6379:6379"
   hrmsdb:
     build: ./hrms
-    container_name: hrms
+    container_name: hrmsdb
     privileged: true
     volumes:
       - ./data/hrms_data:/var/lib/mysql:delegated
