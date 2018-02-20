@@ -2,15 +2,20 @@
 include dirname(__FILE__).'/config.php';
 include(CLIENT_APP_PATH.'../lib/adodb512/adodb.inc.php');
 
+error_log("#Test");
+
 $isConfigFileExists = file_exists(CLIENT_APP_PATH."config.php");
 $configData = file_get_contents(CLIENT_APP_PATH."config.php");
 
 error_log("isConfigFileExists $isConfigFileExists");
 error_log("configData $configData");
-
+error_log("#Test1");
 $ret = array();
+error_log("#Test2");
 
 if(!$isConfigFileExists || $configData != ""){
+error_log("#Test3");
+
 	$ret["status"] = "ERROR";
 	$ret["msg"] = "You are trying to install IceHrm on an existing installation.";
 	echo json_encode($ret);
@@ -18,11 +23,13 @@ if(!$isConfigFileExists || $configData != ""){
 }
 
 $action = $_REQUEST['action'];
-
+error_log("#Test4");
 if($action == "TEST_DB"){
 
-	$db = NewADOConnection('mysqli');
-	$res = $db->Connect($_REQUEST["APP_HOST"], $_REQUEST["APP_USERNAME"], $_REQUEST["APP_PASSWORD"], $_REQUEST["APP_DB"]);
+$db = NewADOConnection('mysqli');
+error_log("#Test5");
+$res = $db->Connect($_REQUEST["APP_HOST"], $_REQUEST["APP_USERNAME"], $_REQUEST["APP_PASSWORD"], $_REQUEST["APP_DB"]);
+error_log("#Test6");
 error_log("#Test DB 01");
 	if (!$res){
 error_log("#Test DB 01 01");

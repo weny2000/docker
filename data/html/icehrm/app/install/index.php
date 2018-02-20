@@ -4,6 +4,8 @@ $isConfigFileExists = file_exists(CLIENT_APP_PATH."config.php");
 
 $errorMap = array();
 
+error_log("test config 00");
+
 if($isConfigFileExists){
 	$data = file_get_contents(CLIENT_APP_PATH."config.php");
 	if($data != ""){
@@ -14,24 +16,24 @@ if($isConfigFileExists){
 	fwrite($file,"");
 	fclose($file);
 }
-
+error_log("test config 01");
 $isConfigFileWriteable = is_writable(CLIENT_APP_PATH."config.php");
 error_log("Config writable ".$isConfigFileWriteable);
 error_log("Config exists ".file_exists(CLIENT_APP_PATH."config.php"));
 if(!$isConfigFileWriteable){
 	$errorMap[] = array("important","Configuration file [".CLIENT_APP_PATH."config.php] is not writable","Make this file writable",array("sudo touch ".CLIENT_APP_PATH."config.php","sudo chmod 777 ".CLIENT_APP_PATH."config.php"));				
 }
-
+error_log("test config 02");
 $isConfigSampleFileExists = file_exists(CLIENT_APP_PATH."config.sample.php");
 
 if(!$isConfigSampleFileExists){
 	$errorMap[] = array("important","Sample configuration file doesn't exists","Please check :".CLIENT_APP_PATH."config.sample.php");			
 }
-
+error_log("test config 03");
 $isDataFolderExists = is_dir(CLIENT_APP_PATH."data");
 $isDataFolderWritable = false;
 
-
+error_log("test config 04");
 if(!$isDataFolderExists){
 	$errorMap[] = array("important","Data directory does not exists","Please create directory :".CLIENT_APP_PATH."data",array("sudo mkdir ".CLIENT_APP_PATH."data"));	
 }else{
@@ -47,9 +49,11 @@ if(!$isDataFolderExists){
 		}
 		unlink(CLIENT_APP_PATH."data/test.txt");
 	}
+error_log("test config 05");
 	if(!$isDataFolderWritable){
 		$errorMap[] = array("important","Data folder is not writable","Provide wirte permission to the web server user to ".CLIENT_APP_PATH."data",array("sudo chmod 777 ".CLIENT_APP_PATH."data"));		
 	}
+error_log("test config 06");
 }
 
 
@@ -103,7 +107,6 @@ if(!$isDataFolderExists){
   	  	request["APP_PASSWORD"] = $("#APP_PASSWORD").val();
   	  	request["APP_HOST"] = $("#APP_HOST").val();
   	  	request["action"] = "TEST_DB";
-
 	  	$.post("submit.php",request , function(data) {
 	  		if(data.status == "SUCCESS"){
 	  			alert(data.msg);
